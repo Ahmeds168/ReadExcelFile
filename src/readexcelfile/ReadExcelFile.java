@@ -47,8 +47,15 @@ static List<Data> data = new ArrayList<Data>();
         firstSheet = workbook.getSheetAt(0);
          iterator = firstSheet.iterator();
          
+         String columnToRead="Name,Year";
+         String[] columnToReadSplit = columnToRead.split(",");
+         for(int i=0; i<columnToReadSplit.length; i++){
          
-         readColumn("Status");
+             System.out.println("=========Reading: "+columnToReadSplit[i]+" Column==========");
+             readColumn(columnToReadSplit[i]);
+         }
+         
+         //readColumn("Status");
 
 
 //addToList2();
@@ -119,7 +126,8 @@ iterator = firstSheet.iterator();
                         cellIndex=1;
                     else if(currentColumn.equals("Status"))
                         cellIndex=2;
-                    
+                    else if(currentColumn.equals("Year"))
+                        cellIndex=3;                    
                     columnExists = true;
                    // System.out.println();
                     
@@ -177,8 +185,9 @@ iterator = firstSheet.iterator();
                 String name = currentRow.getCell(0).getStringCellValue();
                 double marks = currentRow.getCell(1).getNumericCellValue();
                 String status = currentRow.getCell(2).getStringCellValue();
+                String year = currentRow.getCell(3).getStringCellValue();
                 
-               dataObj = new Data(name,marks,status);
+               dataObj = new Data(name,marks,status,year);
                data.add(dataObj);
                // System.out.println("added");
             
@@ -237,6 +246,15 @@ class Data{
 public String name;
 public double marks;
 public String status;
+public String year;
+
+    public void setYear(String year) {
+        this.year = year;
+    }
+
+    public String getYear() {
+        return year;
+    }
 
 public Data(){
 
@@ -244,7 +262,7 @@ public Data(){
 
     @Override
     public String toString() {
-        return  "name=" + name + ", marks=" + marks + ", status=" + status;
+        return  "name=" + name + ", marks=" + marks + ", status=" + status+", year="+year;
     }
 
     public String getName() {
@@ -263,6 +281,13 @@ public Data(){
         this.name = name;
         this.marks = marks;
         this.status = status;
+    }
+
+    public Data(String name, double marks, String status, String year) {
+        this.name = name;
+        this.marks = marks;
+        this.status = status;
+        this.year = year;
     }
 
     public void setName(String name) {
